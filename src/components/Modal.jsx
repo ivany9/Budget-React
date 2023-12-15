@@ -1,8 +1,17 @@
+import { useState } from 'react'
 import CerrarBtn from '../img/cerrar.svg'
+import Mensaje from './Mensaje'
+
 
 const Modal = ({setModal,animarModal,setAnimarModal}) => {
 
+  const [nombre,setNombre]=useState('')
+  const[cantidad,setCantidad]=useState(0)
+  const[categoria,setCategoria]=useState('')
+  const[mensaje,setMensaje]=useState('')
   
+
+
 
 const ocultarModal=()=>{
 
@@ -11,6 +20,25 @@ const ocultarModal=()=>{
       },1000)
   
       setAnimarModal(false)
+
+}
+
+const handleSubmit=(e)=>{
+  e.preventDefault()
+if([nombre,cantidad,categoria].includes(''))
+  {
+    setMensaje('Todos los campos son obligatorios') 
+   
+   setTimeout(() => {
+    
+    setMensaje('')
+   }, 1000);
+
+
+    return  
+  }
+ 
+
 
 }
 
@@ -27,9 +55,16 @@ const ocultarModal=()=>{
           />
         </div>
 
-        <form className={`formulario ${animarModal ? "animar":"cerrar"}`} >
+        <form  
+          onSubmit={handleSubmit}
+        
+        
+        className={`formulario ${animarModal ? "animar":"cerrar"}`} >
           
            <legend>Nuevo Gasto</legend>
+            {mensaje&& <Mensaje tipo={'error'} >{mensaje}</Mensaje>
+              }
+
        <div className='campo'>
                <label htmlFor='nombre'>Nombre del Gasto</label>
       
@@ -37,6 +72,8 @@ const ocultarModal=()=>{
                    id='nombre' 
                    type="text"
                    placeholder='Nombre de Gasto'
+                   value={nombre}
+                   onChange={(e)=>setNombre(e.target.value)}
                  />
        </div>
 
@@ -47,6 +84,8 @@ const ocultarModal=()=>{
                    id='cantidad' 
                    type="number"
                    placeholder='cantidad del gasto'
+                   value={cantidad}
+                   onChange={e=>setCantidad(Number(e.target.value))}
                  />
        </div>
          
@@ -54,6 +93,8 @@ const ocultarModal=()=>{
                <label htmlFor='categoria'>Categoria</label>
                 <select
                    id="categoria"
+                   value={categoria}
+                   onChange={(e)=>setCategoria(e.target.value)}
                    >
                    <option value=""> -- Selecciome -- </option>
                    <option value="ahorro"> ahorro  </option>

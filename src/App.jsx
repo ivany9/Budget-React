@@ -24,7 +24,11 @@ function App() {
    
     
   }
+const guardarGasto=gasto=>{
+  
+   console.log(gasto)
 
+}
 
 
    return (
