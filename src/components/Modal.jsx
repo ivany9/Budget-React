@@ -3,7 +3,7 @@ import CerrarBtn from '../img/cerrar.svg'
 import Mensaje from './Mensaje'
 
 
-const Modal = ({setModal,animarModal,setAnimarModal}) => {
+const Modal = ({setModal,animarModal,setAnimarModal,guardarGasto}) => {
 
   const [nombre,setNombre]=useState('')
   const[cantidad,setCantidad]=useState(0)
@@ -14,12 +14,12 @@ const Modal = ({setModal,animarModal,setAnimarModal}) => {
 
 
 const ocultarModal=()=>{
-
+  setAnimarModal(false)
     setTimeout(()=>{
       setModal(false)
       },1000)
   
-      setAnimarModal(false)
+      
 
 }
 
@@ -38,7 +38,7 @@ if([nombre,cantidad,categoria].includes(''))
     return  
   }
  
-
+guardarGasto({nombre,cantidad,categoria})
 
 }
 
@@ -99,10 +99,11 @@ if([nombre,cantidad,categoria].includes(''))
                    <option value=""> -- Selecciome -- </option>
                    <option value="ahorro"> ahorro  </option>
                    <option value="comida"> comida  </option>
-                   <option value="gastos-varios">  gastos varios </option>
+                   <option value="gastos">  gastos varios </option>
                    <option value="casa"> Casa  </option>
                    <option value="ocio"> Ocio </option>
                    <option value="suscripciones"> Suscripciones </option>
+                   <option value="salud"> Salud </option>
                  
    
                 </select>
