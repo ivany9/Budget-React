@@ -1,9 +1,10 @@
-import {useState  } from 'react'
+import {useState,useEffect  } from 'react'
 import Header from './components/Header'
 import IconoNuevoGasto from './img/nuevo-gasto.svg'
 import Modal from './components/Modal'
 import { formatoFecha, generarId } from './helpers'
 import ListadoGastos from './components/ListadoGastos'
+import Gasto from './components/Gasto'
 
 
 
@@ -14,12 +15,38 @@ function App() {
   const [modal,setModal]=useState(false)
   const[animarModal,setAnimarModal]=useState(false)
   const[gastos,setGastos]=useState([])
+ const [gastoEditar,setGastoEditar]=useState({})
+
+
+useEffect(()=>{
+
+if(Object.keys(gastoEditar).length>0){
+  setModal(true)
+  setTimeout(()=>{
+   setAnimarModal(true)
+
+   
+   
+
+
+  },300)
+  
+}
+
+},[gastoEditar])
+
+
+ 
 
   
   const handleNuevoGasto=()=>{
     setModal(true)
+    setGastoEditar('')
     setTimeout(()=>{
      setAnimarModal(true)
+
+     
+     
 
 
     },300)
@@ -31,16 +58,29 @@ function App() {
 
 
 const guardarGasto=gasto=>{
+if(gasto.id){
+  console.log('actualizacion  ')
+const gastoActualizado=gastos.map(gastoState=>gastoState.id===gasto.id ? gasto: gastoState)
+setGastos(gastoActualizado)
+}
+else{
   gasto.id=generarId()
   const fechaActual=Date.now()
   gasto.fecha=formatoFecha(fechaActual)
-   setGastos([...gastos,gasto])
+  setGastos([...gastos,gasto])
+}
+  
    setAnimarModal(false)
     setTimeout(()=>{
       setModal(false)
       },1000)
   
 }
+ const eliminarGasto=id=>{
+ 
+    const gastosActualizados=gastos.filter(gasto=>gasto.id!=id)
+   setGastos(gastosActualizados)
+ }
 
 
    return (
@@ -60,7 +100,9 @@ const guardarGasto=gasto=>{
            <> 
            <main>
            <ListadoGastos
+              setGastoEditar={setGastoEditar}
               gastos={gastos}
+              eliminarGasto={eliminarGasto}
            />
            </main>
           <div className='nuevo-gasto'>
@@ -81,6 +123,7 @@ const guardarGasto=gasto=>{
       animarModal={animarModal}
       setAnimarModal={setAnimarModal}
       guardarGasto={guardarGasto}
+      gastoEditar={gastoEditar}
     
    />}
 

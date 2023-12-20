@@ -8,7 +8,13 @@ const[gastado,setGastado]=useState(0)
 
 useEffect(()=>{
 
- console.log('Control presupuesto')
+ const totalGastado=gastos.reduce((total,gasto)=>
+gasto.cantidad+total,0)
+setGastado(totalGastado)
+
+const totalDisponible=presupuesto-totalGastado
+setDisponible(totalDisponible)
+
 
 },[gastos])
 

@@ -1,15 +1,33 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import CerrarBtn from '../img/cerrar.svg'
 import Mensaje from './Mensaje'
 
 
-const Modal = ({setModal,animarModal,setAnimarModal,guardarGasto}) => {
+const Modal = ({setModal,animarModal,setAnimarModal,guardarGasto,gastoEditar}) => {
 
   const [nombre,setNombre]=useState('')
   const[cantidad,setCantidad]=useState(0)
   const[categoria,setCategoria]=useState('')
   const[mensaje,setMensaje]=useState('')
+  const[id,setId]=useState('')
+  const[fecha,setFecha]=useState('')
+
+
   
+  useEffect(()=>{
+
+    if(Object.keys(gastoEditar).length>0){
+      setNombre(gastoEditar.nombre)
+      setCantidad(gastoEditar.cantidad)
+      setCategoria(gastoEditar.categoria)
+      setId(gastoEditar.id)  
+      setFecha(gastoEditar.fecha) 
+    }
+
+
+
+    
+  },[])
 
 
 
@@ -38,8 +56,7 @@ if([nombre,cantidad,categoria].includes(''))
     return  
   }
  
-guardarGasto({nombre,cantidad,categoria})
-
+ guardarGasto({nombre,cantidad,categoria,id,fecha})
 }
 
   return (
@@ -61,7 +78,7 @@ guardarGasto({nombre,cantidad,categoria})
         
         className={`formulario ${animarModal ? "animar":"cerrar"}`} >
           
-           <legend>Nuevo Gasto</legend>
+           <legend>{gastoEditar.nombre?"Editar gasto":"Nuevo Gasto"} </legend>
             {mensaje&& <Mensaje tipo={'error'} >{mensaje}</Mensaje>
               }
 
@@ -111,8 +128,8 @@ guardarGasto({nombre,cantidad,categoria})
        </div>
            <input 
                type='submit'
-               value='anadir gasto'
-           
+               value={gastoEditar.nombre?"Editar Gasto":"Anadir gasto"}
+          
            
            />
 
