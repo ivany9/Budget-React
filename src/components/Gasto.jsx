@@ -10,6 +10,13 @@ import IconoSalud from '../img/icono_salud.svg'
 import IconoSuscripciones from '../img/icono_suscripciones.svg'
 
 const Gasto = ({gasto,setGastoEditar,eliminarGasto}) => {
+
+  const handleEliminar=()=>{
+
+   eliminarGasto(gasto.id)
+   
+
+  }
  
  const leadingActions=()=>(
   
@@ -23,7 +30,7 @@ const Gasto = ({gasto,setGastoEditar,eliminarGasto}) => {
  const trailingActions=()=>(
 <TrailingActions>
     <SwipeAction
-      onClick={() => eliminarGasto(gasto.id)}
+      onClick={() => handleEliminar()}
       destructive={true}
     >
       Delete
