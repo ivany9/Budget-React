@@ -9,6 +9,7 @@ import IconoOcio from '../img/icono_ocio.svg'
 import IconoSalud from '../img/icono_salud.svg'
 import IconoSuscripciones from '../img/icono_suscripciones.svg'
 
+
 const Gasto = ({gasto,setGastoEditar,eliminarGasto}) => {
 
   const handleEliminar=()=>{
@@ -55,6 +56,9 @@ const Gasto = ({gasto,setGastoEditar,eliminarGasto}) => {
 
   }
   return (
+   
+    
+     
     <SwipeableList>
      <SwipeableListItem
      leadingActions={leadingActions()}

@@ -4,9 +4,7 @@ import IconoNuevoGasto from './img/nuevo-gasto.svg'
 import Modal from './components/Modal'
 import { formatoFecha, generarId } from './helpers'
 import ListadoGastos from './components/ListadoGastos'
-
-
-
+import Filtros from './components/Filtros'
 
 
 function App() {
@@ -14,6 +12,7 @@ function App() {
     Number(localStorage.getItem('presupuesto'))?? 0
   )
   const[isValidPresupuesto,setIsValidPresupuesto]=useState(false)
+
   const [modal,setModal]=useState(false)
   const[animarModal,setAnimarModal]=useState(false)
   const[gastos,setGastos]=useState(
@@ -22,10 +21,11 @@ function App() {
 
   )
  const [gastoEditar,setGastoEditar]=useState({})
+ const [filtro,setFiltro]=useState('')
+ const [gastosFiltrados,setGastosFiltrados]=useState([])
 
 
-
-
+ 
 useEffect(()=>{
 
 if(Object.keys(gastoEditar).length>0){
@@ -67,8 +67,17 @@ useEffect(()=>{
 
 },[gastos])
 
+useEffect(()=>{
+ 
+  if(filtro){
+  
+    const gastosFiltrados=gastos.filter(gasto =>gasto.categoria===filtro)
+     setGastosFiltrados(gastosFiltrados)
+
+  }
 
 
+},[filtro])
 
   
   const handleNuevoGasto=()=>{
@@ -132,10 +141,17 @@ else{
            
            <> 
            <main>
+            <Filtros
+               filtro={filtro}
+               setFiltro={setFiltro}
+            />
            <ListadoGastos
               setGastoEditar={setGastoEditar}
               gastos={gastos}
               eliminarGasto={eliminarGasto}
+              filtro={filtro}
+              gastosFiltrados={gastosFiltrados}
+
            />
            </main>
           <div className='nuevo-gasto'>

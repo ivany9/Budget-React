@@ -7,6 +7,7 @@ const ControlPresupuesto = ({presupuesto,gastos}) => {
  const [porcentaje,setPorcentaje]=useState(0)     
 const [disponible,setDisponible]=useState(0)
 const[gastado,setGastado]=useState(0)
+const[overLimit,setOverLimit]=useState('blue')
 
 
 useEffect(()=>{
@@ -19,6 +20,13 @@ const totalDisponible=presupuesto-totalGastado
 setDisponible(totalDisponible)
 
 const nuevoPorcentaje=(((presupuesto-totalDisponible)/presupuesto)*100).toFixed(2)
+if(nuevoPorcentaje>100)
+{
+ setOverLimit('red') }
+ else
+ setOverLimit('blue')
+
+
 setTimeout(() => {
       setPorcentaje(nuevoPorcentaje)      
 }, 1500);
@@ -42,7 +50,7 @@ const formatearCantidad= (cantidad)=>{
                   <div>
                   <CircularProgressbar
                   styles={buildStyles({
-                        pathColor: 'red'  ,
+                        pathColor: `${overLimit}`,
                         trailColor:"#F5F5F5" ,
                         textColor:"black"                   
   
